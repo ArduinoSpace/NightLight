@@ -1,45 +1,35 @@
+#include "RgbLed.h"
+
 // RGB
 #define PIN_LED_RED 9
 #define PIN_LED_GREEN 10
 #define PIN_LED_BLUE 11
 
-const long delayLed = 5;
-unsigned long timestampLastChangeLed;
-int currentPinLed;
-int currentBrightLed;
-boolean showLed;
+RgbLed rgbLed(PIN_LED_RED, PIN_LED_GREEN, PIN_LED_BLUE);
+RgbLed::Color colors[] = {{255, 0, 0}, 
+                          {255, 127, 0}, 
+                          {255, 255, 0},
+                          {0, 255, 0},
+                          {0, 0, 255},
+                          {123, 0, 130},
+                          {143, 0, 255}};
+int itemColor;
 
 void setup() {
-  pinMode(PIN_LED_RED, OUTPUT);
-  pinMode(PIN_LED_GREEN, OUTPUT);
-  pinMode(PIN_LED_BLUE, OUTPUT);
-
-  timestampLastChangeLed = 0;
-  currentPinLed = PIN_LED_RED;
-  currentBrightLed = 0;
-  showLed = true;
+  itemColor = 0;
+  rgbLed.setEnabled(true);
+  rgbLed.setColor(colors[itemColor]);
 }
 
 void loop() {
-  if (millis() - timestampLastChangeLed >= delayLed) {
-    if (currentBrightLed <= -1 || currentBrightLed >= 256) {
-      showLed = !showLed;
-      currentBrightLed = showLed ? 0 : 255;
-      switch(currentPinLed) {
-        case PIN_LED_RED:
-          currentPinLed = PIN_LED_BLUE;
-          break;
-          case PIN_LED_GREEN:
-          currentPinLed = PIN_LED_RED;
-          break;
-          case PIN_LED_BLUE:
-          currentPinLed = PIN_LED_GREEN;
-          break;
-      }
+  rgbLed.resume();
+
+  if (rgbLed.getColor() == colors[itemColor]) {
+    itemColor++;
+    if (itemColor >= (sizeof(colors)/sizeof(RgbLed::Color))) {
+      itemColor = 0;
     }
-    analogWrite(currentPinLed, currentBrightLed);
-    showLed ? currentBrightLed++ : currentBrightLed --;
-    timestampLastChangeLed = millis();
+    rgbLed.setColor(colors[itemColor]);
   }
-  
+ 
 }
