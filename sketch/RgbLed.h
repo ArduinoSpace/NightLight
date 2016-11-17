@@ -28,9 +28,11 @@ class RgbLed {
     RgbLed(int pinRed, int pinGreen, int pinBlue);
     
     void resume();
+    boolean getEnabled();
     void setEnabled(boolean flag);
     void setColor(Color color);
     Color getColor();
+    long getDelay();
     void setDelay(long number);
     
   private:

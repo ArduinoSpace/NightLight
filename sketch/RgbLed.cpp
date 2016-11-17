@@ -48,6 +48,10 @@ void RgbLed::resume() {
   }
 }
 
+boolean RgbLed::getEnabled() {
+  return _enabled;
+}
+
 void RgbLed::setEnabled(boolean flag) {
   _enabled = flag;
 }
@@ -57,6 +61,10 @@ RgbLed::Color RgbLed::getColor() {
 }
 void RgbLed::setColor(RgbLed::Color color) {
   _newColor = color;
+}
+
+long RgbLed::getDelay() {
+  return _delay;
 }
 
 void RgbLed::setDelay(long number) {
