@@ -40,10 +40,7 @@ void loop() {
   }
 
   if (Serial.available()) {
-    int val = Serial.read();
-    Serial.print("I received: ");
-    Serial.println(val, HEX);
-    
+    int val = Serial.read();    
     inputPackage[inputByte] = val;
     inputByte++;
     if (inputByte >= 4) {
